@@ -1,0 +1,40 @@
+<t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+             xmlns:p="tapestry:parameter">
+
+    <t:if test="lazy">
+        <t:zone t:id="zone" id="prop:clientId" class="prop:containerClass"/>
+
+        <p:else>
+            <div t:id="container" id="prop:clientId" class="prop:containerClass">
+                <t:delegate to="block:modalBlock"/>
+            </div>
+        </p:else>
+    </t:if>
+
+    <t:block t:id="modalBlock">
+        <div t:id="modal" t:type="any" class="modal-dialog">
+            <div class="modal-content">
+                <t:extension-point id="content">
+                    <div class="modal-header">
+                        <a class="close" data-dismiss="modal">&times;</a>
+
+                        <h4 class="modal-title">${title}</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <t:body/>
+                    </div>
+
+                    <t:if test="footer">
+                        <div class="modal-footer">
+                            <t:delegate to="footer"/>
+                        </div>
+                    </t:if>
+                </t:extension-point>
+            </div>
+
+            <t:delegate to="showModal"/>
+        </div>
+    </t:block>
+
+</t:container>

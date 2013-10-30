@@ -1,0 +1,5 @@
+dependencies {
+    compile "org.apache.tapestry:tapestry-core:${versions.tapestry}"
+
+    runtime "org.slf4j:slf4j-simple:${versions.slf4j}"
+}

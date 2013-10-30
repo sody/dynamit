@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+<head>
+  <title>${title}</title>
+  <meta content="text/html; charset=utf-8;" http-equiv="content-type"/>
+</head>
+<body>
+
+
+<div class="page container">
+  <t:extension-point id="header-area">
+    <t:menu.navigationmenu/>
+  </t:extension-point>
+
+  <t:extension-point id="content-area">
+    <section id="content" class="wrapper">
+      <div class="page-header">
+        <h1>${title}
+          <t:if test="subtitle">
+            <small>${subtitle}</small>
+          </t:if>
+        </h1>
+      </div>
+
+      <t:body/>
+
+    </section>
+  </t:extension-point>
+
+  <div class="buffer"></div>
+</div>
+
+<footer id="footer" class="container">
+  <t:extension-point id="footer-area">
+    <hr/>
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <t:outputraw value="copyrightMessage"/><br/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 text-right">${message:label.app-version}:</div>
+      <div class="col-sm-6 text-left">${applicationVersion}</div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 text-right">${message:label.tapestry-version}:</div>
+      <div class="col-sm-6 text-left">${tapestryVersion}</div>
+    </div>
+  </t:extension-point>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+<t:extend xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+
+    <t:replace id="content">
+        <t:form t:id="form" context="prop:context" zone="prop:zoneId" class="form-horizontal">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">&times;</a>
+
+                <h4 class="modal-title">${title}</h4>
+            </div>
+
+            <div class="modal-body">
+                <t:body/>
+            </div>
+
+            <t:if test="footer">
+                <div class="modal-footer">
+                    <t:delegate to="footer"/>
+                </div>
+            </t:if>
+        </t:form>
+    </t:replace>
+
+</t:extend>

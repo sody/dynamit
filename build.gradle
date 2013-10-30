@@ -1,0 +1,110 @@
+group = 'io.github.dynamit'
+version = '1.0-SNAPSHOT'
+description = 'DynamIt Component Library'
+
+ext {
+    isSnapshot = version.endsWith('-SNAPSHOT')
+
+    snapshotUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
+    stagingUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+
+    versions = [
+            java: '1.6',
+            groovy: '2.0.6',
+            gradle: '1.8',
+
+            tapestry: '5.3.7',
+
+            spock: '0.7-groovy-2.0',
+            slf4j: '1.6.2',
+    ]
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = versions.gradle
+}
+
+allprojects {
+    apply plugin: 'idea'
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'groovy'
+    apply plugin: 'maven-publish'
+
+    group = rootProject.group
+    version = rootProject.version
+
+    sourceCompatibility = versions.java
+    targetCompatibility = versions.java
+
+    configurations {
+        provided
+    }
+
+    sourceSets {
+        main {
+            compileClasspath += configurations.provided
+        }
+        test {
+            compileClasspath += configurations.provided
+            runtimeClasspath += configurations.provided
+        }
+    }
+
+    dependencies {
+        testCompile "org.codehaus.groovy:groovy-all:${versions.groovy}"
+        testCompile "org.spockframework:spock-core:${versions.spock}"
+
+        testRuntime "org.slf4j:slf4j-simple:${versions.slf4j}"
+    }
+
+    test {
+        useJUnit()
+
+        maxHeapSize '512m'
+    }
+
+    javadoc {
+        classpath = sourceSets.main.compileClasspath
+        options {
+            links 'http://download.oracle.com/javase/6/docs/api/'
+            links 'http://download.oracle.com/javaee/6/api/'
+        }
+    }
+
+    jar {
+        from(rootProject.projectDir) {
+            include '*.md'
+            into 'META-INF'
+        }
+    }
+
+    task sourcesJar(type: Jar) {
+        from sourceSets.main.allSource
+        from(rootProject.projectDir) {
+            include '*.md'
+            into 'META-INF'
+        }
+        classifier 'sources'
+    }
+
+    task javadocJar(type: Jar) {
+        from javadoc
+        classifier 'javadoc'
+    }
+
+    artifacts {
+        archives sourcesJar, javadocJar
+    }
+
+    idea.module {
+        scopes.PROVIDED.plus += configurations.provided
+    }
+}
