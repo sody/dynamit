@@ -1,10 +1,47 @@
 <html t:type="layout" title="Index" subtitle="page"
-      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
 
-<div class="row">
+<table class="table">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th colspan="2">Name</th>
+  </tr>
+  </thead>
+  <tbody>
+  <t:loop source="users" value="user" formState="none">
+    <tr>
+      <td>${user.id}</td>
+      <td>${user.name}</td>
+      <td>
+        <t:eventlink zone="formModal" event="editUser" context="user.id">Edit</t:eventlink>
+      </td>
+    </tr>
+  </t:loop>
+  </tbody>
+</table>
+<t:eventlink zone="formModal" event="addUser">Add</t:eventlink>
+
+
+
+<t:modalform t:id="formModal" id="formModal" title="Edit User" lazy="true">
+  <div class="form-group">
+    <t:label for="name" class="control-label col-sm-4"/>
     <div class="col-sm-6">
-        ${message:content-text}
+      <t:textfield t:id="name" class="form-control"
+                   label="Name"
+                   value="user.name"
+                   validate="required"
+          />
     </div>
-</div>
+  </div>
+
+  <p:footer>
+    <t:linksubmit class="btn btn-default">Save</t:linksubmit>
+    <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
+  </p:footer>
+</t:modalform>
+
 
 </html>
